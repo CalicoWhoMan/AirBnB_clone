@@ -5,6 +5,7 @@
 from queue import Empty
 from uuid import uuid4
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
@@ -22,6 +23,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
 
     def __str__(self):
         """returns a string representation of an instance"""
@@ -31,11 +33,12 @@ class BaseModel:
     def save(self):
         """changes the updated_at attr to current date and time"""
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """returns a dict of this instance"""
         rDict = self.__dict__
         rDict["__class__"] = type(self)
-        rDict["created_at"] = self.created_at.isoformat()
-        rDict["updated_at"] = self.updated_at.isoformat()
+        rDict["created_at"] = str(self.created_at.isoformat())
+        rDict["updated_at"] = str(self.updated_at.isoformat())
         return rDict
