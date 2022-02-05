@@ -15,15 +15,14 @@ class FileStorage:
         self.__filepath = filepath
         self.__objects = objects
 
-
     def all(self):
         """returns the dictionary __objects"""
         return self.__objects
 
     def new(self, obj):
+        """stores a dictionary of obj in __objects"""
         self.__objects[str(type(obj)) + '.' + obj.id]\
-            = obj.to_dict()
-
+            = obj
 
     def save(self):
         # first take all obj dictionaries from
@@ -31,15 +30,21 @@ class FileStorage:
         # store those strings in a list and save each one
         # to the json file provided
         jsonList = []
+        wholeStr = ''
         for key in self.__objects:
-            jsonList.append(json.dumps(self.__objects[key]))
+            print(key)
+            jsonList.append(json.dumps(self.__objects[key], default=str))
         with open(self.__filepath, 'w', encoding="utf-8") as jsonFile:
-            for i in jsonList:
-                json.dump(jsonList[i], jsonFile, ensure_ascii=False)
+            for piece in jsonList:
+                print(type(piece))
+                wholeStr += piece
+            json.dump(wholeStr, jsonFile, ensure_ascii=False)
 
-    @classmethod
     def reload(self):
+        strList = []
         if os.path.isfile('file.json'):
             with open(self.__filepath, 'r', encoding="utf-8") as jsonFile:
                 for line in jsonFile:
-                    self.__objects.append(json.loads(line.strip))
+                    strList.append(json.loads(line.strip))
+            for objJ in strList:
+                self.new(objJ)
