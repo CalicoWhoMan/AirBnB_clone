@@ -37,7 +37,9 @@ class BaseModel:
 
     def to_dict(self):
         """returns a dict of this instance"""
-        rDict = self.__dict__
+        rDict = {}
+        for key, value in self.__dict__.items():
+            rDict[key] = value
         rDict["__class__"] = self.__class__.__name__
         if type(self.created_at) is not str:
             rDict["created_at"] = self.created_at.isoformat()
