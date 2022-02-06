@@ -23,7 +23,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
+            storage.new(self.to_dict())
 
     def __str__(self):
         """returns a string representation of an instance"""
@@ -39,6 +39,6 @@ class BaseModel:
         """returns a dict of this instance"""
         rDict = self.__dict__
         rDict["__class__"] = type(self)
-        rDict["created_at"] = str(self.created_at.isoformat())
-        rDict["updated_at"] = str(self.updated_at.isoformat())
+        rDict["created_at"] = self.created_at.isoformat()
+        rDict["updated_at"] = self.updated_at.isoformat()
         return rDict
