@@ -2,7 +2,7 @@
 """this will be base of all classes"""
 
 
-from queue import Empty
+from time import strftime
 from uuid import uuid4
 from datetime import datetime
 from models import storage
@@ -38,7 +38,13 @@ class BaseModel:
     def to_dict(self):
         """returns a dict of this instance"""
         rDict = self.__dict__
-        rDict["__class__"] = type(self)
-        rDict["created_at"] = self.created_at.isoformat()
-        rDict["updated_at"] = self.updated_at.isoformat()
+        rDict["__class__"] = self.__class__.__name__
+        if type(self.created_at) is not str:
+            rDict["created_at"] = self.created_at.isoformat()
+        else:
+            rDict["created_at"] = self.created_at
+        if type(self.updated_at) is not str:
+            rDict["updated_at"] = self.updated_at.isoformat()
+        else:
+            rDict["updated_at"] = self.updated_at
         return rDict
