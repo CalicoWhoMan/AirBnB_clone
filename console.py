@@ -2,6 +2,8 @@
 """entry point for command interpretor"""
 
 import cmd
+import json
+import os
 from models.base_model import BaseModel
 from models import storage
 
@@ -45,11 +47,31 @@ class HBNBCommand(cmd.Cmd):
                         print(tempModel.__str__())
                     else:
                         print("** no instance found **")
+                else:
+                    print("** class doesn't exist **")
             else:
                 print("** instance id missing **")
         else:
             print("** class name missing **")
 
+    def do_destroy(self, arg):
+        """Deletes an instance based on the class name and id
+        (save the change into the JSON file)."""
+        if arg != '':
+            argList = arg.split()
+            if len(argList) >= 2:
+                if argList[0] == 'BaseModel':
+                    if argList[0] + '.' + argList[1] in storage.all():
+                            del storage.all()[argList[0] + '.' + argList[1]]
+                            storage.save()
+                    else:
+                        print("** no instance found **")
+                else:
+                    print("** class doesn't exist")
+            else:
+                print("** instance id missing **")
+        else:
+            print("** class name missing **")
 
 
 if __name__ == '__main__':
