@@ -25,7 +25,7 @@ class FileStorage:
 
     def new(self, obj):
         """stores an obj in __objects"""
-        self.__objects[(str(type(obj))) + '.' + obj.id] = obj
+        self.__objects[(str(obj.__class__.__name__)) + '.' + obj.id] = obj
 
     def save(self):
         # first take all obj dictionaries from
