@@ -11,19 +11,26 @@ from models import storage
 class BaseModel:
     def __init__(self, *args, **kwargs):
         """creates an instance"""
-        if kwargs != {}:
-            self.id = kwargs.get('id')
+        if kwargs:
+            for key, value in kwargs['kwargs'].items():
+                if key != '__class__':
+                    if key == 'created_at' or key == 'updated_at':
+                        setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
+                    else:
+                        setattr(self, key, value)
+            self.id = kwargs['kwargs'].get('id')
             self.created_at = \
-                datetime.strptime(kwargs.get('created_at'),
+                datetime.strptime(kwargs['kwargs'].get('created_at'),
                                   "%Y-%m-%dT%H:%M:%S.%f")
             self.updated_at = \
-                datetime.strptime(kwargs.get('updated_at'),
+                datetime.strptime(kwargs['kwargs'].get('updated_at'),
                                   "%Y-%m-%dT%H:%M:%S.%f")
+            
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self.to_dict())
+            storage.new(self)
 
     def __str__(self):
         """returns a string representation of an instance"""
@@ -33,6 +40,9 @@ class BaseModel:
     def save(self):
         """changes the updated_at attr to current date and time"""
         self.updated_at = datetime.now()
+        if "{}.{}".format(self.__class__.__name__, self.id) in storage.all():
+            del storage.all()["{}.{}".format(self.__class__.__name__, self.id)]
+            storage.new(self)
         storage.save()
 
     def to_dict(self):

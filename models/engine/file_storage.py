@@ -2,14 +2,13 @@
 """this module holds the file_storage class"""
 
 
-from asyncore import write
 import json
-from json import JSONEncoder
 import os
+from json import JSONEncoder
 
 class BaseClassEncoder(JSONEncoder):
     def default(self, o):
-        return o.to_dict
+        return o.to_dict()
 
 class FileStorage:
     """contains methods and attributes for storing object
@@ -25,9 +24,8 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """stores a dictionary of obj in __objects"""
-        self.__objects[str(type(obj)) + '.' + (obj['id'])]\
-            = obj
+        """stores an obj in __objects"""
+        self.__objects[(str(type(obj))) + '.' + obj.id] = obj
 
     def save(self):
         # first take all obj dictionaries from
@@ -37,7 +35,7 @@ class FileStorage:
         with open(self.__filepath, 'w', encoding="utf-8") as jsonFile:
             for key in self.__objects:
                 instObj = self.__objects[key]
-                jsonStr = json.dumps(instObj, default=str)
+                jsonStr = json.dumps(instObj, cls=BaseClassEncoder)
                 jsonFile.write(jsonStr + '\n')
 
     def reload(self):
@@ -47,4 +45,8 @@ class FileStorage:
                 for line in jsonFile:
                     strList.append(json.loads(line))
             for objJ in strList:
-                self.new(objJ)
+                from models.base_model  import BaseModel
+                print("THIS IS OBJJ-------{}".format(objJ))
+                newObj = BaseModel(kwargs=objJ)
+                print("THIS IS THE NEWOBJ---{}".format(newObj))
+                self.new(newObj)
