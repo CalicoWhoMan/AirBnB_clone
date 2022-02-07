@@ -3,6 +3,7 @@
 
 import cmd
 from models.base_model import BaseModel
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -28,8 +29,27 @@ class HBNBCommand(cmd.Cmd):
             print(newModel.id)
         elif arg == '':
             print("** class name missing **")
+            pass
         else:
             print("** class doesn't exist **")
+
+    def do_show(self, arg):
+        """given a class and id, prints the associated objects
+        string representation"""
+        if arg != '':
+            argList = arg.split()
+            if len(argList) >= 2:
+                if argList[0] == 'BaseModel':
+                    if argList[0] + '.' + argList[1] in storage.all():
+                        tempModel = storage.all()[argList[0] + '.' + argList[1]]
+                        print(tempModel.__str__())
+                    else:
+                        print("** no instance found **")
+            else:
+                print("** instance id missing **")
+        else:
+            print("** class name missing **")
+
 
 
 if __name__ == '__main__':
