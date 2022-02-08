@@ -47,7 +47,8 @@ class HBNBCommand(cmd.Cmd):
             if len(argList) >= 2:
                 if argList[0] in classDict.keys():
                     if argList[0] + '.' + argList[1] in storage.all():
-                        tempModel = storage.all()[argList[0] + '.' + argList[1]]
+                        tempModel = storage.all()[argList[0] +
+                                                  '.' + argList[1]]
                         print(tempModel.__str__())
                     else:
                         print("** no instance found **")
@@ -125,6 +126,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
             elif len(argList) == 0:
                 print("** class name missing **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
