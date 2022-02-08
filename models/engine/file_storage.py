@@ -20,7 +20,7 @@ class FileStorage:
 
     def __init__(self, filepath='file.json', objects={}):
         """creates a file_storage object"""
-        self.__filepath = filepath
+        self.file_path = filepath
         self.__objects = objects
 
     def all(self):
@@ -36,7 +36,7 @@ class FileStorage:
         # __objects keys convert them to json strings
         # store those strings in a list and save each one
         # to the json file provided
-        with open(self.__filepath, 'w', encoding="utf-8") as jsonFile:
+        with open(self.file_path, 'w', encoding="utf-8") as jsonFile:
             for key in self.__objects:
                 instObj = self.__objects[key]
                 jsonStr = json.dumps(instObj, cls=BaseClassEncoder)
@@ -45,7 +45,7 @@ class FileStorage:
     def reload(self):
         strList = []
         if os.path.isfile('file.json'):
-            with open(self.__filepath, 'r', encoding="utf-8") as jsonFile:
+            with open(self.file_path, 'r', encoding="utf-8") as jsonFile:
                 for line in jsonFile:
                     strList.append(json.loads(line))
             for objJ in strList:
