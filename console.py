@@ -22,6 +22,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
+        """passes an empty line entry"""
         pass
 
     def do_create(self, arg):
@@ -76,6 +77,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_all(self, arg):
+        """shows every instance of objects"""
         argList = arg.split()
         if len(argList) > 0:
             if argList[0] in classDict:
@@ -90,6 +92,7 @@ class HBNBCommand(cmd.Cmd):
                 print(tempObj.__str__())
 
     def do_update(self, arg):
+        """updates an attribute of a given class"""
         argList = arg.split()
         if len(argList) >= 4:
             if argList[0] in classDict.keys():
