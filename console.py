@@ -62,8 +62,8 @@ class HBNBCommand(cmd.Cmd):
             if len(argList) >= 2:
                 if argList[0] == 'BaseModel':
                     if argList[0] + '.' + argList[1] in storage.all():
-                            del storage.all()[argList[0] + '.' + argList[1]]
-                            storage.save()
+                        del storage.all()[argList[0] + '.' + argList[1]]
+                        storage.save()
                     else:
                         print("** no instance found **")
                 else:
@@ -72,6 +72,54 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class name missing **")
+
+    def do_all(self, arg):
+        argList = arg.split()
+        if len(argList) > 0:
+            if "BaseModel" in argList:
+                for key, value in storage.all().items():
+                    if "BaseModel" == storage.all()[key].__class__.__name__:
+                        tempObj = storage.all()[key]
+                        print(tempObj.__str__())
+            else:
+                print("** class doesn't exist **")
+        else:
+            for key, value in storage.all().items():
+                tempObj = storage.all()[key]
+                print(tempObj.__str__())
+
+    def do_update(self, arg):
+        argList = arg.split()
+        if len(argList) >= 4:
+            if argList[0] == "BaseModel":
+                if "BaseModel" + '.' + argList[1] in storage.all().keys():
+                    tempObj = storage.all()["BaseModel" + '.' + argList[1]]
+                    argF = argList[3]
+                    for key, value in storage.all().items():
+                        for attName, attVal in value.to_dict().items():
+                            if argList[2] == attName:
+                                if type(value) is int:
+                                    argF = int(argList[3])
+                                if type(value) is float:
+                                    argF = float(argList[3])
+                                else:
+                                    argfSp = slice(1, -1)
+                                    argF = (argList[3])[argfSp]
+                    setattr(tempObj, argList[2], argF)
+                    storage.save()
+                else:
+                    print("** no instance found **")
+            else:
+                print("** class doesn't exist **")
+        else:
+            if len(argList) == 3:
+                print("** value missing **")
+            elif len(argList) == 2:
+                print("** attribute name missing **")
+            elif len(argList) == 1:
+                print("** instance id missing **")
+            elif len(argList) == 0:
+                print("** class name missing **")
 
 
 if __name__ == '__main__':
