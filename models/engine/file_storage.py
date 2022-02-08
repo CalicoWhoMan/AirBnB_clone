@@ -7,9 +7,12 @@ import os
 from json import JSONEncoder
 import models
 
+
 class BaseClassEncoder(JSONEncoder):
+    """Encodes input for a JSONdump"""
     def default(self, o):
         return o.to_dict()
+
 
 class FileStorage:
     """contains methods and attributes for storing object
