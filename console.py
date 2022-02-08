@@ -6,6 +6,7 @@ import json
 import os
 from models.base_model import BaseModel
 from models import storage
+from models.helpers import classDict
 
 
 class HBNBCommand(cmd.Cmd):
@@ -25,8 +26,8 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         """Creates a new instance of BaseModel, saves it to the JSON file
         and then prints the id"""
-        if arg == "BaseModel":
-            newModel = BaseModel()
+        if arg in classDict.keys():
+            newModel = classDict[arg]()
             newModel.save()
             print(newModel.id)
         elif arg == '':
@@ -41,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
         if arg != '':
             argList = arg.split()
             if len(argList) >= 2:
-                if argList[0] == 'BaseModel':
+                if argList[0] in classDict.keys():
                     if argList[0] + '.' + argList[1] in storage.all():
                         tempModel = storage.all()[argList[0] + '.' + argList[1]]
                         print(tempModel.__str__())
@@ -60,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
         if arg != '':
             argList = arg.split()
             if len(argList) >= 2:
-                if argList[0] == 'BaseModel':
+                if argList[0] in classDict.keys():
                     if argList[0] + '.' + argList[1] in storage.all():
                         del storage.all()[argList[0] + '.' + argList[1]]
                         storage.save()
@@ -76,11 +77,10 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         argList = arg.split()
         if len(argList) > 0:
-            if "BaseModel" in argList:
+            if argList[0] in classDict:
                 for key, value in storage.all().items():
-                    if "BaseModel" == storage.all()[key].__class__.__name__:
-                        tempObj = storage.all()[key]
-                        print(tempObj.__str__())
+                    tempObj = storage.all()[key]
+                    print(tempObj.__str__())
             else:
                 print("** class doesn't exist **")
         else:
@@ -91,9 +91,9 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         argList = arg.split()
         if len(argList) >= 4:
-            if argList[0] == "BaseModel":
-                if "BaseModel" + '.' + argList[1] in storage.all().keys():
-                    tempObj = storage.all()["BaseModel" + '.' + argList[1]]
+            if argList[0] in classDict.keys():
+                if argList[0] + '.' + argList[1] in storage.all().keys():
+                    tempObj = storage.all()[argList[0] + '.' + argList[1]]
                     argF = argList[3]
                     for key, value in storage.all().items():
                         for attName, attVal in value.to_dict().items():

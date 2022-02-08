@@ -5,6 +5,7 @@
 import json
 import os
 from json import JSONEncoder
+import models
 
 class BaseClassEncoder(JSONEncoder):
     def default(self, o):
@@ -45,8 +46,8 @@ class FileStorage:
                 for line in jsonFile:
                     strList.append(json.loads(line))
             for objJ in strList:
-                from models.base_model  import BaseModel
-                print("THIS IS OBJJ-------{}".format(objJ))
-                newObj = BaseModel(kwargs=objJ)
-                print("THIS IS THE NEWOBJ---{}".format(newObj))
-                self.new(newObj)
+                from models.helpers import classDict
+                for key, value in classDict.items():
+                    if objJ['__class__'] == key:
+                        newObj = value(kwargs=objJ)
+                        self.new(newObj)
