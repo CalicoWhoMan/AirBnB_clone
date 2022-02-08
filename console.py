@@ -10,6 +10,7 @@ from models.helpers import classDict
 
 
 class HBNBCommand(cmd.Cmd):
+    """this class serves as my console"""
     prompt = '(hbnb) '
 
     def do_quit(self, arg):
