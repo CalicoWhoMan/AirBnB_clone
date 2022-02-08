@@ -7,9 +7,11 @@ import os
 from json import JSONEncoder
 import models
 
+
 class BaseClassEncoder(JSONEncoder):
     def default(self, o):
         return o.to_dict()
+
 
 class FileStorage:
     """contains methods and attributes for storing object
@@ -49,5 +51,5 @@ class FileStorage:
                 from models.helpers import classDict
                 for key, value in classDict.items():
                     if objJ['__class__'] == key:
-                        newObj = value(kwargs=objJ)
+                        newObj = value(**objJ)
                         self.new(newObj)

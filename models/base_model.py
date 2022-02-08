@@ -12,20 +12,21 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """creates an instance"""
         if kwargs:
-            for key, value in kwargs['kwargs'].items():
+            for key, value in kwargs.items():
                 if key != '__class__':
                     if key == 'created_at' or key == 'updated_at':
-                        setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
+                        setattr(self, key, datetime.strptime
+                                (value, "%Y-%m-%dT%H:%M:%S.%f"))
                     else:
                         setattr(self, key, value)
-            self.id = kwargs['kwargs'].get('id')
+            self.id = kwargs.get('id')
             self.created_at = \
-                datetime.strptime(kwargs['kwargs'].get('created_at'),
+                datetime.strptime(kwargs.get('created_at'),
                                   "%Y-%m-%dT%H:%M:%S.%f")
             self.updated_at = \
-                datetime.strptime(kwargs['kwargs'].get('updated_at'),
+                datetime.strptime(kwargs.get('updated_at'),
                                   "%Y-%m-%dT%H:%M:%S.%f")
-            
+
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()

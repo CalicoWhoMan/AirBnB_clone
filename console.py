@@ -72,7 +72,7 @@ class HBNBCommand(cmd.Cmd):
                     else:
                         print("** no instance found **")
                 else:
-                    print("** class doesn't exist")
+                    print("** class doesn't exist **")
             else:
                 print("** instance id missing **")
         else:
@@ -100,17 +100,15 @@ class HBNBCommand(cmd.Cmd):
             if argList[0] in classDict.keys():
                 if argList[0] + '.' + argList[1] in storage.all().keys():
                     tempObj = storage.all()[argList[0] + '.' + argList[1]]
-                    argF = argList[3]
-                    for key, value in storage.all().items():
-                        for attName, attVal in value.to_dict().items():
-                            if argList[2] == attName:
-                                if type(value) is int:
-                                    argF = int(argList[3])
-                                if type(value) is float:
-                                    argF = float(argList[3])
-                                else:
-                                    argfS = slice(1, -1)
-                                    argF = (argList[3])[argfS]
+                    argfS = slice(1, -1)
+                    argF = (argList[3])[argfS]
+                    if argF.isdigit():
+                        argF = float(argF)
+                        if argF.is_integer():
+                            argF = int(argF)
+                        else:
+                            argfS = slice(1, -1)
+                            argF = (argList[3])[argfS]
                     setattr(tempObj, argList[2], argF)
                     storage.save()
                 else:
