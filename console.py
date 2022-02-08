@@ -121,6 +121,5 @@ class HBNBCommand(cmd.Cmd):
             elif len(argList) == 0:
                 print("** class name missing **")
 
-
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
