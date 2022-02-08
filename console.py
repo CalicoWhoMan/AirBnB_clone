@@ -103,8 +103,8 @@ class HBNBCommand(cmd.Cmd):
                                 if type(value) is float:
                                     argF = float(argList[3])
                                 else:
-                                    argfSp = slice(1, -1)
-                                    argF = (argList[3])[argfSp]
+                                    argfS = slice(1, -1)
+                                    argF = (argList[3])[argfS]
                     setattr(tempObj, argList[2], argF)
                     storage.save()
                 else:
