@@ -37,5 +37,5 @@ class TestBaseModel(unittest.TestCase):
         test1 = base_model()
         testDict = test1.__dict__
         testDict['__class__'] = type(test1)
-        testDict[updated_at] = test1.created_at
-        testDict[created_at] = test1.updated_at
+        testDict["updated_at"] = test1.created_at
+        testDict["created_at"] = test1.updated_at

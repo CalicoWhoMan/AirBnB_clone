@@ -4,7 +4,8 @@ from models.base_model import BaseModel
 
 
 class Review(BaseModel):
-    """the review class contains a place, user and text"""
+    """Review Class of BaseModel that contains thes attrs:
+    place_id, user_id, & text"""
     place_id = ''
     user_id = ''
     text = ''

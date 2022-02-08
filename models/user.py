@@ -4,7 +4,8 @@
 from models.base_model import BaseModel
 
 class User(BaseModel):
-    """The user class which is strangely simple"""
+    """City Class of BaseModel that contains thes attrs:
+    email, password, first&last names"""
     email = ''
     password = ''
     first_name = ''

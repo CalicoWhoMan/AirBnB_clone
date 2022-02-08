@@ -26,7 +26,6 @@ class BaseModel:
             self.updated_at = \
                 datetime.strptime(kwargs.get('updated_at'),
                                   "%Y-%m-%dT%H:%M:%S.%f")
-
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()

@@ -9,6 +9,7 @@ import models
 
 
 class BaseClassEncoder(JSONEncoder):
+    """Encodes input for a JSONdump"""
     def default(self, o):
         return o.to_dict()
 
