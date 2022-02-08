@@ -52,5 +52,5 @@ class FileStorage:
                 from models.helpers import classDict
                 for key, value in classDict.items():
                     if objJ['__class__'] == key:
-                        newObj = value(kwargs=objJ)
+                        newObj = value(**objJ)
                         self.new(newObj)
