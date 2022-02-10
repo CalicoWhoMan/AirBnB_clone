@@ -76,7 +76,7 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) all
 ```
 ```
-(hbnb) all BaseModel 26edbf21-1127-4db6-b66f-10e37b002886
+(hbnb) all BaseModel
 ```
 *Example
 ```
