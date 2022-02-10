@@ -69,3 +69,17 @@ EOF  all  create  destroy  help  quit  show  update
 ```
 [BaseModel] (ebad8c68-6584-4417-a7ec-6430aeb987de) {'id': 'ebad8c68-6584-4417-a7ec-6430aeb987de', 'created_at': datetime.datetime(2022, 2, 10, 12, 37, 18, 799454), 'updated_at': datetime.datetime(2022, 2, 10, 12, 37, 18, 799474), '`email': 'aibnb@mail.com"'}
 ```
+### All - Prints All String Representations of All Instances
+
+* Use 'all' or all 'class name' 'id'
+```
+(hbnb) all
+```
+```
+(hbnb) all BaseModel 26edbf21-1127-4db6-b66f-10e37b002886
+```
+*Example
+```
+[BaseModel] (26edbf21-1127-4db6-b66f-10e37b002886) {'id': '26edbf21-1127-4db6-b66f-10e37b002886', 'created_at': datetime.datetime(2022, 2, 10, 12, 34, 22, 855286), 'updated_at': datetime.datetime(2022, 2, 10, 12, 34, 22, 855548)}
+[BaseModel] (ebad8c68-6584-4417-a7ec-6430aeb987de) {'id': 'ebad8c68-6584-4417-a7ec-6430aeb987de', 'created_at': datetime.datetime(2022, 2, 10, 12, 37, 18, 799454), 'updated_at': datetime.datetime(2022, 2, 10, 12, 37, 18, 799474), '`email': 'aibnb@mail.com"'}
+```
